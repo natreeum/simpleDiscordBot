@@ -140,6 +140,11 @@ module.exports = {
     if (!memberLimit || isNaN(memberLimit)) return;
     const bettingPoint = Number(msgSplit.shift());
     if (!bettingPoint || isNaN(bettingPoint)) return;
+    const subPointRes = await point.subPoint(message.author.id, bettingPoint);
+    if (subPointRes === false)
+      return await message.reply(
+        `<@${message.author.id}>님, 포인트가 부족하여 게임을 생성할 수 없습니다.`
+      );
     const joinBtn = new ButtonBuilder()
       .setCustomId("rrJoin")
       .setLabel("참가")
