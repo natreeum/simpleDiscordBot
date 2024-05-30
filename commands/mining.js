@@ -76,7 +76,7 @@ module.exports = {
 
       let winPoint;
       let isJackpot = false;
-      if (percent < 10) {
+      if (percent < 1) {
         winPoint = 1000;
         isJackpot = true;
       } else winPoint = 100;
