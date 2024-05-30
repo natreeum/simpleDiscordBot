@@ -50,7 +50,6 @@ class Game {
         .setLabel("시작")
         .setStyle(ButtonStyle.Secondary);
       const row = new ActionRowBuilder().addComponents(joinBtn, startBtn);
-      this.reward += this.bettingPoint;
       waitingRoomMessage.edit({
         content: `러시안룰렛 게임을 시작합니다.\n\`베팅 포인트 : ${bettingPoint}\`\n참가하시겠습니까?\n\n\`참가인원 : ${
           this.memberList.length
