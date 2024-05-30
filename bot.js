@@ -24,12 +24,14 @@ client.on(Events.MessageCreate, async (message) => {
   await require("./commands/pointCommand")(message);
   await require("./commands/conch")(message);
   await require("./commands/russianRoulette").create(message);
+  await require("./commands/mining").command(message);
 });
 
 // button interactions
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isButton()) return;
   await require("./commands/russianRoulette").buttonInteraction(interaction);
+  await require("./commands/mining").buttonInteraction(interaction);
 });
 
 // Log in to Discord with your client's token
