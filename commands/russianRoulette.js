@@ -52,7 +52,7 @@ class Game {
       const row = new ActionRowBuilder().addComponents(joinBtn, startBtn);
       this.reward += this.bettingPoint;
       waitingRoomMessage.edit({
-        content: `러시안룰렛 게임을 시작합니다. \`베팅 포인트 : ${bettingPoint}\`\n참가하시겠습니까?\n\n\`참가인원 : ${
+        content: `러시안룰렛 게임을 시작합니다.\n\`베팅 포인트 : ${bettingPoint}\`\n참가하시겠습니까?\n\n\`참가인원 : ${
           this.memberList.length
         }\`\n ${this.memberList.map((e) => `<@${e}>\n`)}\n`,
         components: [row],
@@ -90,7 +90,7 @@ class Game {
       });
     };
 
-    this.useTurn = async () => {
+    this.useTurn = async (interaction) => {
       if (this.memberList[this.turnIdx] !== interaction.user.id) return;
       this.lastMessage = await this.lastMessage.edit({
         content: `🔫`,
@@ -186,7 +186,14 @@ module.exports = {
     }
 
     if (interaction.customId == "rrBang") {
-      games[0].useTurn();
+      if (games.length === 0) {
+        await interaction.message.delete();
+        return await interaction.reply({
+          content: "진행중인 게임이 없습니다. 게임을 다시 시작해주세요.",
+          components: [],
+        });
+      }
+      games[0].useTurn(interaction);
       return interaction.deferUpdate();
     }
   },
