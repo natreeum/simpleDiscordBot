@@ -53,7 +53,7 @@ class Game {
       waitingRoomMessage.edit({
         content: `러시안룰렛 게임을 시작합니다.\n\`베팅 포인트 : ${bettingPoint}\`\n참가하시겠습니까?\n\n\`참가인원 : ${
           this.memberList.length
-        }\`\n ${this.memberList.map((e) => `<@${e}>\n`)}\n`,
+        }/${this.memberLimit}\`\n ${this.memberList.map((e) => `<@${e}>\n`)}\n`,
         components: [row],
       });
     };
@@ -163,7 +163,7 @@ module.exports = {
       .setStyle(ButtonStyle.Secondary);
     const row = new ActionRowBuilder().addComponents(joinBtn, startBtn);
     const waitingRoomMessage = await message.reply({
-      content: `러시안룰렛 게임을 시작합니다. \`베팅 포인트 : ${bettingPoint}\`\n참가하시겠습니까?\n\n\`참가인원 : 1\`\n <@${message.author.id}>\n`,
+      content: `러시안룰렛 게임을 시작합니다. \`베팅 포인트 : ${bettingPoint}\`\n참가하시겠습니까?\n\n\`참가인원 : 1/${games[0].memberLimit}\`\n <@${message.author.id}>\n`,
       components: [row],
     });
     games.push(
