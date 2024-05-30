@@ -72,9 +72,20 @@ module.exports = {
     if (interaction.user.id !== userId) return;
 
     if (answer === value) {
-      const curPoint = await point.addPoint(userId, 100);
+      const percent = Math.floor(Math.random() * 1000);
+
+      let winPoint;
+      let isJackpot = false;
+      if (percent < 10) {
+        winPoint = 1000;
+        isJackpot = true;
+      } else winPoint = 100;
+
+      const curPoint = await point.addPoint(userId, winPoint);
       await interaction.update({
-        content: `정답입니다! 100포인트를 얻었습니다.\n현재 포인트 : ${curPoint}`,
+        content: `${
+          isJackpot ? `🎉\`채굴 10배 당첨!!\`🎉\n\n` : ""
+        }정답입니다! ${winPoint}포인트를 얻었습니다.\n현재 포인트 : ${curPoint}`,
         components: [],
       });
       delete messages[userId];
