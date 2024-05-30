@@ -11,9 +11,8 @@ function sleep(ms) {
 module.exports = {
   command: async function (message) {
     if (message.author.bot) return;
-    const msg = message.content.split(" ");
-    const command = msg.shift();
-    if (command !== "채굴") return;
+    const msg = message.content;
+    if (msg !== "채굴") return;
 
     if (messages[message.author.id])
       return await message.reply("이미 진행중인 게임이 있습니다.");
