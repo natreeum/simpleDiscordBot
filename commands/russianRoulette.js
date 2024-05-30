@@ -142,12 +142,12 @@ module.exports = {
     const msgSplit = msg.split(" ");
     const command = msgSplit.shift();
     if (command !== "러시안룰렛") return;
-    if (games.length !== 0)
-      return await message.reply("이미 생성된 게임이 있습니다.");
     const memberLimit = Number(msgSplit.shift());
     if (!memberLimit || isNaN(memberLimit)) return;
     const bettingPoint = Number(msgSplit.shift());
     if (!bettingPoint || isNaN(bettingPoint)) return;
+    if (games.length !== 0)
+      return await message.reply("이미 생성된 게임이 있습니다.");
     const subPointRes = await point.subPoint(message.author.id, bettingPoint);
     if (subPointRes === false)
       return await message.reply(
