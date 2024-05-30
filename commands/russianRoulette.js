@@ -172,8 +172,20 @@ module.exports = {
     );
   },
 
+  checkIfGameExists: async (interaction) => {
+    if (games.length === 0) {
+      await interaction.message.delete();
+      await interaction.reply({
+        content: "진행중인 게임이 없습니다. 게임을 다시 시작해주세요.",
+        components: [],
+      });
+      return false;
+    }
+    return true;
+  },
   buttonInteraction: async function (interaction) {
     if (interaction.customId == "rrJoin") {
+      if (!(await this.checkIfGameExists(interaction))) return;
       const userId = interaction.user.id;
       if (games.length === 0) return;
       games[0].join(userId);
@@ -181,11 +193,13 @@ module.exports = {
     }
 
     if (interaction.customId == "rrStart") {
+      if (!(await this.checkIfGameExists(interaction))) return;
       games[0].startGame(interaction.user.id);
       return interaction.deferUpdate();
     }
 
     if (interaction.customId == "rrBang") {
+      if (!(await this.checkIfGameExists(interaction))) return;
       if (games.length === 0) {
         await interaction.message.delete();
         return await interaction.reply({
