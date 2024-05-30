@@ -3,7 +3,7 @@ const point = require("../point");
 function parseUserId(m) {
   // message format : <@123456789012345678>
   const id = m.split("<@")[1].split(">")[0];
-  if (id.length !== 18) return undefined;
+  if (id.length < 18) return undefined;
   return id;
 }
 
@@ -28,6 +28,8 @@ module.exports = async function (message) {
   if (command == "포인트전송") {
     const value = Number(msg.split(" ")[1]);
     const userId = parseUserId(msg.split(" ")[2]);
+    console.log(message.content);
+    console.log(value, userId);
     if (isNaN(value) || value === undefined || userId === undefined) return;
     const subPointRes = await point.subPoint(message.author.id, value);
     if (subPointRes === false)
