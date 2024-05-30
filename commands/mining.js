@@ -72,11 +72,11 @@ module.exports = {
     if (interaction.user.id !== userId) return;
 
     if (answer === value) {
-      const percent = Math.floor(Math.random() * 1000);
+      const percent = Math.floor(Math.random() * 100);
 
       let winPoint;
       let isJackpot = false;
-      if (percent < 1) {
+      if (percent < 5) {
         winPoint = 1000;
         isJackpot = true;
       } else winPoint = 100;
