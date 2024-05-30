@@ -35,8 +35,8 @@ class Game {
           `<@${userId}>님, ` + "포인트가 부족합니다."
         );
       await this.waitingRoomMessage.channel.send(
-        `<@${userId}>\n`,
-        `${this.bettingPoint}가 차감되었습니다.\n잔여 포인트 : ${subPointRes}`
+        `<@${userId}>\n` +
+          `${this.bettingPoint}가 차감되었습니다.\n잔여 포인트 : ${subPointRes}`
       );
 
       this.reward += this.bettingPoint;
