@@ -87,6 +87,11 @@ class Game {
     };
 
     this.useTurn = async () => {
+      if (this.memberList[this.turnIdx] !== interaction.user.id) return;
+      this.lastMessage = await this.lastMessage.edit({
+        content: `🔫`,
+        components: [],
+      });
       const rand = Math.floor(Math.random() * 500);
       await sleep(1000 + rand);
       if (this.randIdx === this.bangCnt) {
@@ -120,7 +125,7 @@ class Game {
     this.endGame = async () => {
       await point.addPoint(this.memberList[0], this.reward);
       this.lastMessage.channel.send({
-        content: `게임이 종료되었습니다.\n최종 생존자 : <@${this.memberList[0]}>`,
+        content: `게임이 종료되었습니다.\n\n<@${this.memberList[0]}>님, 생존을 축하드립니다.\n${this.reward}포인트를 획득하셨습니다.`,
         components: [],
       });
       games.pop();
