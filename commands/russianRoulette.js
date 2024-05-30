@@ -32,8 +32,7 @@ class Game {
       const subPointRes = await point.subPoint(userId, this.bettingPoint);
       if (subPointRes === false)
         return await this.waitingRoomMessage.channel.send(
-          `<@${userId}>님, `,
-          "포인트가 부족합니다."
+          `<@${userId}>님, ` + "포인트가 부족합니다."
         );
       await this.waitingRoomMessage.channel.send(
         `<@${userId}>\n`,
