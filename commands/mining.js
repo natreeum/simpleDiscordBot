@@ -35,6 +35,13 @@ module.exports = {
     answers[wrong1Idx] = wrong1;
     answers[wrong2Idx] = wrong2;
 
+    const checkDup = [];
+    for (let a of answers) {
+      if (checkDup.includes(a)) {
+        return await message.reply("오류가 발생했습니다. 다시 시도해주세요.");
+      } else checkDup.push(a);
+    }
+
     const buttons = answers.map((value) =>
       new ButtonBuilder()
         .setCustomId(`miningButton:${answer}:${value}:${message.author.id}`)
