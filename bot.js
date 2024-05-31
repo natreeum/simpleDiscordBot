@@ -14,8 +14,9 @@ const client = new Client({
 // When the client is ready, run this code (only once).
 // The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
 // It makes some properties non-nullable.
-client.once(Events.ClientReady, (readyClient) => {
+client.once(Events.ClientReady, async (readyClient) => {
   console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+  await require("./btnInteraction/mining").sendInitialMsg(readyClient);
 });
 
 client.on(Events.MessageCreate, async (message) => {
@@ -24,14 +25,14 @@ client.on(Events.MessageCreate, async (message) => {
   await require("./commands/pointCommand")(message);
   await require("./commands/conch")(message);
   await require("./commands/russianRoulette").create(message);
-  await require("./commands/mining").command(message);
 });
 
 // button interactions
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isButton()) return;
   await require("./commands/russianRoulette").buttonInteraction(interaction);
-  await require("./commands/mining").buttonInteraction(interaction);
+  await require("./btnInteraction/mining").start(interaction);
+  await require("./btnInteraction/mining").buttonInteraction(interaction);
 });
 
 // Log in to Discord with your client's token
