@@ -28,6 +28,7 @@ module.exports = {
 
     const customId = interaction.customId;
     if (customId !== "startMining") return;
+    if (Object.keys(messages).length > 0) return;
 
     const randNum1 = Math.floor(Math.random() * 51);
     const randNum2 = Math.floor(Math.random() * 51);
