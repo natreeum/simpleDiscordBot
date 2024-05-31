@@ -105,12 +105,12 @@ module.exports = {
       await interaction.update({
         content: `${
           isJackpot ? `🎉\`채굴 10배 당첨!!\`🎉\n\n` : ""
-        }👍정답입니다!👍 ${winPoint}포인트를 얻었습니다.\n현재 포인트 : ${curPoint}`,
+        } 🙆‍♂️정답입니다! ${winPoint}포인트를 얻었습니다.\n현재 포인트 : ${curPoint}`,
         components: [],
       });
     } else {
       await interaction.update({
-        content: `👎틀렸습니다!👎 정답은 ${answer}입니다.`,
+        content: `🙅‍♀️틀렸습니다! 정답은 ${answer}입니다.`,
         components: [],
       });
     }
