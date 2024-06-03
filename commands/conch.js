@@ -17,6 +17,16 @@ module.exports = async function (message) {
     "좋아요.",
     "다시 한 번 물어봐요.",
     "안 돼요.",
+    "그냥 기다려요.",
+    "가능할 수도 있어요.",
+    "아직은 몰라요.",
+    "기대하지 마세요.",
+    "기다리면 알게 될 거예요.",
+    "아마 아닐 거예요.",
+    "지금은 아니에요.",
+    "그럴 수도 있어요.",
+    "상황을 지켜보세요.",
+    "글쎄요, 잘 모르겠어요.",
   ];
 
   const answer = answers[Math.floor(Math.random() * answers.length)];
