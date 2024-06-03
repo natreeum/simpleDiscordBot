@@ -7,7 +7,7 @@ module.exports = async function (message) {
   const msg = message.content.split(" ");
   const command = msg.shift();
   const inputMessage = msg.join(" ");
-  if (command !== "마법의소라고동" || command !== "고동") return;
+  if (command !== "마법의소라고동" && command !== "고동") return;
 
   const answers = [
     "언젠가는 하겠죠.",
