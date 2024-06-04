@@ -59,7 +59,7 @@ module.exports = async function (message) {
         : ""
     }`;
     const newBalance = await point.addPoint(message.author.id, reward);
-    await message.channel.send(sendingMessage);
+    await message.channel.send(sendingMessage + `\n잔액 : ${newBalance}`);
     isGameOn = false;
     return;
   }
