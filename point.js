@@ -13,6 +13,7 @@ module.exports = {
   addPoint: async function (id, value) {
     const curPoint = await this.getPoint(id);
     const query = "UPDATE users SET point = ? WHERE id = ?";
+    value = Math.floor(value);
     await db(query, [curPoint + value, id]);
     return await this.getPoint(id);
   },
@@ -20,6 +21,7 @@ module.exports = {
     const curPoint = await this.getPoint(id);
     const query = "UPDATE users SET point = ? WHERE id = ?";
     if (curPoint - value < 0) return false;
+    value = Math.floor(value);
     await db(query, [curPoint - value, id]);
     return await this.getPoint(id);
   },

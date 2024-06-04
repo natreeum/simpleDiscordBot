@@ -16,7 +16,7 @@ const client = new Client({
 // It makes some properties non-nullable.
 client.once(Events.ClientReady, async (readyClient) => {
   console.log(`Ready! Logged in as ${readyClient.user.tag}`);
-  await require("./btnInteraction/mining").sendInitialMsg(readyClient);
+  // await require("./btnInteraction/mining").sendInitialMsg(readyClient);
 });
 
 client.on(Events.MessageCreate, async (message) => {
@@ -25,6 +25,7 @@ client.on(Events.MessageCreate, async (message) => {
   await require("./commands/pointCommand")(message);
   await require("./commands/conch")(message);
   await require("./commands/russianRoulette").create(message);
+  await require("./commands/dice")(message);
 });
 
 // button interactions
