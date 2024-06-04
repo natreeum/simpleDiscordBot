@@ -26,7 +26,7 @@ module.exports = async function (message) {
   if (curPoint < value) return await message.reply("포인트가 부족합니다.");
 
   isGameOn = true;
-  await message.channel.send(
+  const userMsg = await message.channel.send(
     `<@${message.author.id}>님이 ${value}포인트로 주사위를 던집니다.`
   );
   const p1 = rollDice();
@@ -36,8 +36,10 @@ module.exports = async function (message) {
   const pMax = Math.max(p1, p2);
 
   await sleep(1000);
-  await message.channel.send(`🎲 : **${p1}**  🎲 : **${p2}**`);
-  await message.channel.send(`[🤖] 컴퓨터가 주사위를 던집니다.`);
+  await userMsg.edit(`🫣 🎲 : **${p1}**  🎲 : **${p2}**`);
+  const dealerMsg = await message.channel.send(
+    `[🤖] 컴퓨터가 주사위를 던집니다.`
+  );
 
   const d1 = rollDice();
   const d2 = rollDice();
@@ -46,60 +48,63 @@ module.exports = async function (message) {
   const dMax = Math.max(d1, d2);
 
   await sleep(1000);
-  await message.channel.send(`🎲 : **${d1}**  🎲 : **${d2}**`);
+  await dealerMsg.edit(`🤖 🎲 : **${d1}**  🎲 : **${d2}**`);
 
   if (pSum > dSum) {
     let reward = value;
     if (isPSame) reward *= 2;
-    const sendingMessage = `<@${
-      message.author.id
-    }> 님이 주사위 던지기에서 승리하셨습니다! 🎉\n보상 : ${reward}포인트${
-      isPSame
-        ? `\n(추가보상 : ${reward / 2} ( 큰 수로 승리 & 더블로 승리 ))`
-        : ""
-    }`;
+    const sendingMessage = `승리하셨습니다! 🎉`;
     const newBalance = await point.addPoint(message.author.id, reward);
-    await message.channel.send(sendingMessage + `\n잔액 : ${newBalance}`);
+    await message.channel.send(
+      sendingMessage + `\n잔액 : ${newBalance}(+${reward})포인트`
+    );
     isGameOn = false;
     return;
   }
   if (pSum < dSum) {
-    const sendingMessage = `<@${message.author.id}> 님이 주사위 던지기에서 패배하셨습니다.`;
+    const sendingMessage = `패배하셨습니다.`;
     const newBalance = await point.subPoint(message.author.id, value);
-    await message.channel.send(sendingMessage + `\n잔액 : ${newBalance}`);
+    await message.channel.send(
+      sendingMessage + `\n잔액 : ${newBalance}(-${value})포인트`
+    );
     isGameOn = false;
     return;
   }
   // draw but win by double
   if (isPSame && !isDSame) {
     let reward = value;
-    const sendingMessage = `<@${message.author.id}> 님이 주사위 던지기에서 비겼지만 더블로 승리하셨습니다! 🎉\n보상 : ${reward}포인트`;
+    const sendingMessage = `비겼지만 더블로 승리하셨습니다! 🎉`;
     const newBalance = await point.addPoint(message.author.id, reward);
-    await message.channel.send(sendingMessage + `\n잔액 : ${newBalance}`);
+    await message.channel.send(
+      sendingMessage + `\n잔액 : ${newBalance}(+${reward})포인트`
+    );
     isGameOn = false;
     return;
   }
   // draw but lose by double
   if (isDSame && !isPSame) {
-    const sendingMessage = `<@${message.author.id}> 님이 주사위 던지기에서 비겼지만 더블로 패배하셨습니다.`;
+    const sendingMessage = `비겼지만 더블로 패배하셨습니다.`;
     const newBalance = await point.subPoint(message.author.id, value);
-    await message.channel.send(sendingMessage + `\n잔액 : ${newBalance}`);
+    await message.channel.send(
+      sendingMessage + `\n잔액 : ${newBalance}(-${value})포인트`
+    );
     isGameOn = false;
     return;
   }
   // draw but win by max
   if (pMax > dMax) {
     let reward = value;
-    const sendingMessage = `<@${message.author.id}> 님이 주사위 던지기에서 비겼지만 최대값이 높아서 승리하셨습니다! 🎉\n\n
-    보상 : ${reward}포인트`;
+    const sendingMessage = `비겼지만 더 높은 눈의 주사위를 보유하여 승리하셨습니다! 🎉`;
     const newBalance = await point.addPoint(message.author.id, reward);
-    await message.channel.send(sendingMessage + `\n잔액 : ${newBalance}`);
+    await message.channel.send(
+      sendingMessage + `\n잔액 : ${newBalance}(+${reward})포인트`
+    );
     isGameOn = false;
     return;
   }
   // draw but lose by max
   if (pMax < dMax) {
-    const sendingMessage = `<@${message.author.id}> 님이 주사위 던지기에서 비겼지만 최대값이 낮아서 패배하셨습니다.`;
+    const sendingMessage = `비겼지만 더 높은 눈의 주사위를 보유하지 못하여 패배하셨습니다.`;
     const newBalance = await point.subPoint(message.author.id, value);
     await message.channel.send(sendingMessage + `\n잔액 : ${newBalance}`);
     isGameOn = false;
