@@ -57,9 +57,7 @@ module.exports = async function (message) {
     const newBalance = await point.addPoint(message.author.id, reward);
     await message.channel.send(
       sendingMessage +
-        `\n잔액 : ${newBalance}(+${isPSame ? reward / 2 : reward}${
-          isPSame ? "(더블 x2)" : ""
-        })포인트`
+        `\n잔액 : ${newBalance}(+${reward}${isPSame ? "(더블 x2)" : ""})포인트`
     );
     isGameOn = false;
     return;
