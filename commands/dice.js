@@ -51,7 +51,7 @@ module.exports = async function (message) {
   await dealerMsg.edit(`🤖 🎲 : **${d1}**  🎲 : **${d2}**`);
 
   if (pSum > dSum) {
-    let reward = value;
+    let reward = Math.floor(value * 0.9);
     if (isPSame) reward *= 2;
     const sendingMessage = `승리하셨습니다! 🎉`;
     const newBalance = await point.addPoint(message.author.id, reward);
